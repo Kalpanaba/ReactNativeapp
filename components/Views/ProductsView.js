@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View,  StyleSheet, Image ,ScrollView} from 'react-native';
+// ProductsView.js
+import React from 'react';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import { Card, Button, Text } from 'react-native-elements';
-import axios from 'axios';
+import { useProducts } from '../Controller/ProductController';
 
-
-const Products = () => {
-  const [products, setProducts] = useState([]);
-
-
-  useEffect(() => {
-   
-    axios.get('https://hari-hara.onrender.com/get/products')
-      .then(response => {
-        const activeProducts = response.data.allProducts.filter(product => product.status === 'Active');
-        setProducts(activeProducts.slice(0, 4)); 
-      })
-      .catch(error => console.error('Error fetching products:', error));
-  }, []);
+const ProductsView = () => {
+  const products = useProducts();
 
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-       vertical
+      vertical
       showsVerticalScrollIndicator={true}
     >
       <View style={styles.productContainer}>
@@ -30,14 +19,11 @@ const Products = () => {
             <Image source={{ uri: product.imageUrl }} style={styles.productImage} />
             <Text style={styles.productName}>{product.name}</Text>
             <Text style={styles.productPrice}>Price: ${product.price}</Text>
-            <Button title="ADD" onPress={() => {}}
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.titleStyle}
-           />
+            <Button title="ADD" onPress={() => {}} buttonStyle={styles.buttonStyle} titleStyle={styles.titleStyle} />
           </Card>
         ))}
       </View>
-      </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -45,31 +31,27 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingBottom: 20,
-    
   },
   buttonStyle: {
-    backgroundColor: 'white', 
-    paddingHorizontal: 9, 
+    backgroundColor: 'white',
+    paddingHorizontal: 9,
     paddingVertical: 4,
     borderRadius: 5,
     borderColor: 'green',
     alignSelf: 'flex-end',
-    borderWidth: 2, 
-    borderColor: 'green', 
-    
+    borderWidth: 2,
   },
   titleStyle: {
     color: 'green',
     fontSize: 12,
-   
   },
-    productContainer: {
+  productContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center', 
+    justifyContent: 'center',
   },
   card: {
-    width: '38%', 
+    width: '38%',
     marginBottom: 10,
   },
   productImage: {
@@ -89,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Products;
+export default ProductsView;

@@ -1,23 +1,22 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
+import { menuItems } from '../Models/FooterModels';
+import { handleMenuItemPress } from '../Controller/FooterController';
 
-const BottomMenu = () => {
+const BottomMenuView = () => {
   return (
     <View style={styles.footer}>
       <View style={styles.menuContainer}>
-        <TouchableOpacity style={styles.menuItem}>
-          <Icon name="home" type="ionicon" size={24} color="black" />
-          <Text style={styles.menuText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <Icon name="basket" type="ionicon" size={24} color="black" />
-          <Text style={styles.menuText}>Cart</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <Icon name="person" type="ionicon" size={24} color="black" />
-          <Text style={styles.menuText}>Profile</Text>
-        </TouchableOpacity>
+        {menuItems.map((item, index) => (
+          <TouchableOpacity 
+            key={index} 
+            style={styles.menuItem} 
+            onPress={() => handleMenuItemPress(item.name)}>
+            <Icon name={item.iconName} type="ionicon" size={24} color="black" />
+            <Text style={styles.menuText}>{item.name}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: -2, // Adjust the shadow offset as needed
+      height: -2, 
     },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -54,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomMenu;
+export default BottomMenuView;

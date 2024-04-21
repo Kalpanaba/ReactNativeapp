@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, Image, Dimensions } from 'react-native';
-import axios from 'axios';
 import Carousel from 'react-native-snap-carousel';
+import { useBanners } from '../Controller/BannerController';
 
-const Banner = () => {
-  const [banners, setBanners] = useState([]);
+const BannerView = () => {
+  const banners = useBanners();
   const windowWidth = Dimensions.get('window').width;
-
-  useEffect(() => {
-    // Fetch banner images
-    axios.get('https://hari-hara.onrender.com/get/banner-images')
-      .then(response => {
-        const activeBanners = response.data.allBanners.filter(banner => banner.status === 'Active');
-        setBanners(activeBanners.slice(0, 4)); // Display only first 4 active banners
-      })
-      .catch(error => console.error('Error fetching banners:', error));
-  }, []);
 
   const renderItem = ({ item }) => (
     <View style={styles.bannerContainer}>
       <Image source={{ uri: item.bannerImageUrl }} style={styles.bannerImage} resizeMode="cover" />
     </View>
-  );
-
+  ); 
   return (
     <View style={styles.container}>
       <Carousel
@@ -32,7 +21,7 @@ const Banner = () => {
         itemWidth={windowWidth}
         autoplay={true}
         loop={true}
-        autoplayInterval={3000} // Adjust autoplay interval as needed
+        autoplayInterval={3000}
       />
     </View>
   );
@@ -48,11 +37,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bannerImage: {
-    width: '80%', // Adjust the width of the banner image
+    width: '80%',
     aspectRatio: 4 / 3,
     borderRadius: 10,
     marginVertical: 10,
   },
 });
 
-export default Banner;
+export default BannerView;

@@ -1,27 +1,26 @@
-
-
-
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { ThemeProvider } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import CustomHeader from './components/Header';
-import BottomMenu from './components/Footer';
-import Products from './components/Products';
-import Banner from './components/Banner';
+import HeaderView from './components/Views/HeaderView';
+import BannerView from './components/Views/BannerViews';
+import ProductsView from './components/Views/ProductsView';
+import BottomMenuView from './components/Views/FooterView';
+  
 
 export function App() {
   return (
     <ThemeProvider>
       <SafeAreaProvider style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <CustomHeader />
+        <View style={{ flex: 1 }}> 
+          <HeaderView />
+
           <ScrollView contentContainerStyle={ styles.scrollViewContent}>
-            <Banner />
-            <Products />
+          <BannerView />
+         <ProductsView />  
           </ScrollView>
-          <BottomMenu />
+          <BottomMenuView />
         </View>
       </SafeAreaProvider>
     </ThemeProvider>
